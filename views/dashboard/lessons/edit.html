@@ -1,0 +1,68 @@
+{% extends '_layouts/admin.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/select2.min.css">
+{% endblock %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="py-3 mb-3">
+    <h1 class="h2">تعديل درس</h1>
+  </div>
+  <div>
+    <form action="/dashboard/lessons/{{ lesson.id }}/update" method="POST">
+      {{ _csrf | safe }}
+      <div class="mb-3">
+        <label for="name" class="form-label">إسم الدرس</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ lesson.name }}">
+      </div>
+      <div class="mb-3">
+        <label for="lesson_date" class="form-label">تاريخ الدرس</label>
+        <input type="date" class="form-control" id="lesson_date" name="lesson_date" value="{{ lesson.lesson_date | date }}">
+      </div>
+      <div class="mb-3">
+        <label for="instructor_id" class="form-label">الشيخ الشارح للدرس</label>
+        <select class="form-select" id="instructor_id" name="instructor_id">
+          {% for instructor in instructors %}
+          <option value="{{ instructor.id }}" {% if lesson.instructor.id == instructor.id %}selected{% endif %}>{{ instructor.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="participants" class="form-label">الحاضرين</label>
+        <select class="form-select" id="participants" name="participants" multiple>
+          {% for participant in lesson.participants %}
+          <option value="{{ participant.id }}" selected>{{ participant.name }}</option>
+          {% endfor %}
+          {% for participant in remainingParticipants %}
+          <option value="{{ participant.id }}">{{ participant.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit">تعديل</button>
+    </form>
+  </div>
+</main>
+{% endblock %}
+
+{% block js %}
+<script src="/js/plugins/jquery/jquery.min.js"></script>
+<script src="/js/plugins/select2/select2.min.js"></script>
+<script>
+  $(document).on('ready', function () {
+    $('#participants').select2({
+      dir: 'rtl',
+      multiple: true,
+      language: {
+        noResults:function(){return"لم يتم العثور على أي نتائج"}
+      }
+    })
+    $('#instructor_id').select2({
+      dir: 'rtl',
+      language: {
+        noResults:function(){return"لم يتم العثور على أي نتائج"}
+      }
+    })
+  })
+</script>
+{% endblock %}

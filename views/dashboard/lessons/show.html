@@ -1,0 +1,25 @@
+{% extends '_layouts/admin.html' %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="py-3 mb-3">
+    <h1 class="h2">{{ lesson.name }}</h1>
+  </div>
+  <div>
+    <ul class="list-unstyled">
+      <li>اسم الدرس: <strong>{{ lesson.name }}</strong></li>
+      <li>الشيخ الشارح: <strong>{{ lesson.instructor.name }}</strong></li>
+      <li>تاريخ الدرس: <strong>{{ lesson.lesson_date | date }}</strong></li>
+    </ul>
+    <div>
+      <h2 class="h3">الحاضرين</h2>
+      <hr>
+      <ul>
+        {% for participant in lesson.participants %}
+        <li><a href="/dashboard/participants/{{ participant.id }}">{{ participant.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}
