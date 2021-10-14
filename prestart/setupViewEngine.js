@@ -9,7 +9,7 @@ function setupViewEngine (app) {
   })
   env.addFilter('date', function (str) {
     const date = new Date(str)
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    return date.getFullYear() + '-' + `${(date.getMonth() + 1)}`.padStart(2, '0') + '-' + `${date.getDate()}`.padStart(2, '0')
   })
 }
 
