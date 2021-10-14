@@ -28,7 +28,7 @@
           <td>{{ lesson.lesson_date | date }}</td>
           <td>
             <a class="btn btn-info" href="/dashboard/lessons/{{ lesson.id }}">عرض</a>
-            <a class="btn btn-warning" href="/dashboard/lessons/{{ lesson.id }}/edit">تعديل</a>
+            {% if user %}<a class="btn btn-warning" href="/dashboard/lessons/{{ lesson.id }}/edit">تعديل</a>{% endif %}
           </td>
         </tr>
         {% endfor %}
