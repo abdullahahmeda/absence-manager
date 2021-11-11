@@ -8,7 +8,10 @@ async function index (req, res) {
       builder.whereRaw('MONTH(lesson_date) = MONTH(CURRENT_DATE()) AND YEAR(lesson_date) = YEAR(CURRENT_DATE())')
     }
   })
-  participants = participants.sort((p1, p2) => p2.lessons.length - p1.lessons.length)
+  participants = participants.sort((p1, p2) => {
+    if (p1.lessons.length === p2.lessons.length) return p2.lessonsThisMonth.length - p1.lessonsThisMonth.length
+    return p2.lessons.length - p1.lessons.length
+  })
   res.render('dashboard/participants/index.html', {
     participants
   })

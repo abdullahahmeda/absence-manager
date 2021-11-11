@@ -3,10 +3,14 @@ const Instructor = require('../models/Instructor')
 const filterBody = require('../utils/filterBody')
 
 async function index (req, res) {
-  const instructors = await Instructor.query().withGraphFetched('[lessons(thisMonth) as lessonsThisMonth, lessons]').modifiers({
+  let instructors = await Instructor.query().withGraphFetched('[lessons(thisMonth) as lessonsThisMonth, lessons]').modifiers({
     thisMonth: builder => {
       builder.whereRaw('MONTH(lesson_date) = MONTH(CURRENT_DATE()) AND YEAR(lesson_date) = YEAR(CURRENT_DATE())')
     }
+  })
+  instructors = instructors.sort((i1, i2) => {
+    if (i1.lessons.length === i2.lessons.length) return i2.lessonsThisMonth.length - i1.lessonsThisMonth.length
+    return i2.lessons.length - i1.lessons.length
   })
   res.render('dashboard/instructors/index.html', {
     instructors
