@@ -14,7 +14,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">الإسم</th>
-          <th scope="col">عدد مرات الحضور</th>
+          <th scope="col">عدد مرات الحضور الإجمالية</th>
+          <th scope="col">عدد مرات الحضور هذا الشهر</th>
           <th scope="col">الإجراءات</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@
           <td>{{ participant.id }}</td>
           <td>{{ participant.name }}</td>
           <td>{{ participant.lessons.length }}</td>
+          <td>{{ participant.lessonsThisMonth.length }}</td>
           <td><a class="btn btn-info" href="/dashboard/participants/{{ participant.id }}">عرض</button></td>
         </tr>
         {% endfor %}

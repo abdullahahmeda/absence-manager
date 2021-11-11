@@ -3,7 +3,11 @@ const Participant = require('../models/Participant')
 const filterBody = require('../utils/filterBody')
 
 async function index (req, res) {
-  let participants = await Participant.query().withGraphFetched('lessons')
+  let participants = await Participant.query().withGraphFetched('[lessons(thisMonth) as lessonsThisMonth, lessons]').modifiers({
+    thisMonth: builder => {
+      builder.whereRaw('MONTH(lesson_date) = MONTH(CURRENT_DATE()) AND YEAR(lesson_date) = YEAR(CURRENT_DATE())')
+    }
+  })
   participants = participants.sort((p1, p2) => p2.lessons.length - p1.lessons.length)
   res.render('dashboard/participants/index.html', {
     participants

@@ -14,7 +14,8 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">إسم الشيخ</th>
-          <th scope="col">عدد الدروس</th>
+          <th scope="col">عدد الدروس الإجمالية</th>
+          <th scope="col">عدد الدروس هذا الشهر</th>
           <th scope="col">الإجراءات</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@
           <td>{{ instructor.id }}</td>
           <td>الشيخ {{ instructor.name }}</td>
           <td>{{ instructor.lessons.length }}</td>
+          <td>{{ instructor.lessonsThisMonth.length }}</td>
           <td><a class="btn btn-info" href="/dashboard/instructors/{{ instructor.id }}">عرض</button></td>
         </tr>
         {% endfor %}
